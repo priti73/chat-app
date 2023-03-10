@@ -12,7 +12,10 @@ var cors =require('cors');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin:"null",
+    methods:["GET"],
+}));
 
 
 app.set('view engine', 'ejs');
@@ -31,14 +34,14 @@ app.use(usersrouteRoutes);
 
 app.use((req,res)=>{
 console.log('url',req.url);
-res.sendFile(path.join(__dirname,`Expensetrackerfrontend/${req.url}`))
+//res.sendFile(path.join(__dirname,`Expensetrackerfrontend/${req.url}`))
 })
 
 
 
 sequelize
-.sync()
-//.sync({force: true})
+//.sync()
+.sync({force: true})
 .then(result=>{
    app.listen(3000);
 })

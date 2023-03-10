@@ -13,19 +13,23 @@ const Phonenumber=document.querySelector('#Phonenumber');
             password:password.value
           }
         
-  console.log(signupdetails);
     const response= await axios.post("http://localhost:3000/users/signup",
     signupdetails)
     if(response.status==201){
      // window.location.href="./login.html"
-     console.log('200');
+     alert("Successfuly signed up");
       
+    }
+    else if(response.status==401){
+    alert("User already exists, Please Login");
+     console.log(response.data.message);
     }
     else{
        throw new Error('failed to login')
     }
-        }catch(err){
+        }
+        catch(err){
          console.log(err);
-         document.body.innerHTML=`<div style="color:red;">${err.message} <div>`
+         document.body.innerHTML=`<div style="color:red;">${err.data.message} <div>`
     }
 }
