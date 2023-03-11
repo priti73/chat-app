@@ -13,7 +13,7 @@ const password=document.querySelector('#password');
     const response= await axios.post("http://localhost:3000/users/login",
     logindetails)
     if(response.status==201){
-        console.log('ok');
+        console.log('okay');
        
     }
     
