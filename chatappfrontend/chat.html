@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat Application</title>
+    <style>
+      /* Style for the chat box */
+      .chat-box {
+        width: 400px;
+        height: 500px;
+        border: 1px solid black;
+        overflow: auto;
+      }
+      
+      /* Style for the chat input box */
+      .chat-input {
+        width: 400px;
+        height: 50px;
+        border: 1px solid black;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-box" id="chat-box">
+      <!-- Chat messages will be displayed here -->
+    </div>
+    <textarea class="chat-input" id="chat-input" placeholder="Type your message here..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.4.1/axios.min.js">
+    </script>
+    <script src ="./chat.js">
+     
+    </script>
+  </body>
+</html>
