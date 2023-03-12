@@ -13,13 +13,12 @@ const password=document.querySelector('#password');
     const response= await axios.post("http://localhost:3000/users/login",
     logindetails)
     if(response.status==201){
-        console.log('ok');
-       
-    }
-    
+       localStorage.setItem('token',response.data.token);
+        window.location.href="./chatapp.html"
+        }
         }catch(err){
          console.log(err);
-         document.body.innerHTML=`<div style="color:red;">${err.message} <div>`
+         document.body.innerHTML=`<div style="color:red;">${err.data.message} <div>`
     }
 }
 
