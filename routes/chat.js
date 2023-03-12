@@ -6,6 +6,8 @@ const auntheticateController=require('../middleware/auth');
 
 const router=express.Router();
 
-router.post('/users/chat',auntheticateController.authenticate,chatcontroller.chat);
+
+router.get('/users/chat',chatcontroller.getchat);
+router.post('/users/chat',auntheticateController.authenticate,chatcontroller.postchat);
 
 module.exports=router;

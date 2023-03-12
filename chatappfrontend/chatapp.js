@@ -15,6 +15,7 @@ chatForm.addEventListener('submit',async (event) => {
 
 window.addEventListener('load', ()=>{
  getusers();
+ getmessages();
 })
 
 async function getusers(){
@@ -28,10 +29,14 @@ userlist.forEach((user) => {
 });
 }
 
-// Display chat messages
-const chatHistory = [{ sender: 'User 1', message: 'Hi' }, { sender: 'User 2', message: 'Hello' }]; // Replace with actual chat history from server
+async function getmessages(){
+const response = await axios.get("http://localhost:3000/users/chat");
+console.log("response",response);
+console.log(response.data.message);
+const chatHistory=response.data.message;
 chatHistory.forEach((chat) => {
   const chatMessageElement = document.createElement('div');
-  chatMessageElement.textContent = `${chat.sender}: ${chat.message}`;
+  chatMessageElement.textContent = `${chat.signupName}: ${chat.message}`;
   chatMessages.appendChild(chatMessageElement);
 });
+}

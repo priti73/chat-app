@@ -44,7 +44,7 @@ console.log('url',req.url);
 })
 
 User.hasMany(Chat);
-Chat.belongsTo(User);
+Chat.hasMany(User);
 
 sequelize
 .sync()

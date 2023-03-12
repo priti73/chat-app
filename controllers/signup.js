@@ -49,9 +49,7 @@ exports.getuser= async(req,res,next)=>{
          const signupuser=await user.findAll()
          res.status(201).json({message: 'Succesfully signup',users:signupuser});
       
-     }
-     
-     
+     }     
    catch(err){
       res.status(500).json({
          error: err

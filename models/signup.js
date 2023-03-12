@@ -5,7 +5,7 @@ const sequelize=require('../util/database');
 const User=sequelize.define('signup',{
   id:{
     type: Sequelize.INTEGER,
-    autoIncrement: true,
+   autoIncrement: true,
     allowNull: false,
     primaryKey: true
   },
