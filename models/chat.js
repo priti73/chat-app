@@ -8,6 +8,10 @@ const Chat=sequelize.define('chat',{
     autoIncrement: true,
     allowNull: false,
     primaryKey: true
+   },
+  time:{
+    type:Sequelize.BIGINT,
+    allowNull:false
   },
    message:{
      type:Sequelize.STRING,
