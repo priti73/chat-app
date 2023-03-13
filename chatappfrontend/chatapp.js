@@ -1,3 +1,5 @@
+//const { get } = require("../routes/signup");
+
 const chatForm = document.getElementById('chat-form');
 const chatMessageInput = document.getElementById('chat-message');
 const userList = document.getElementById('user-list');
@@ -15,8 +17,9 @@ chatForm.addEventListener('submit',async (event) => {
 
 window.addEventListener('load', ()=>{
  getusers();
- getmessages();
-})
+ })
+
+
 
 async function getusers(){
 const response = await axios.get("http://localhost:3000/users/signup");
@@ -34,9 +37,23 @@ const response = await axios.get("http://localhost:3000/users/chat");
 console.log("response",response);
 console.log(response.data.message);
 const chatHistory=response.data.message;
+// Clear previous messages
+chatMessages.innerHTML = '';
 chatHistory.forEach((chat) => {
   const chatMessageElement = document.createElement('div');
   chatMessageElement.textContent = `${chat.signupName}: ${chat.message}`;
   chatMessages.appendChild(chatMessageElement);
 });
 }
+
+let intervalId;
+
+function startUpdatingMessages() {
+  // Clear any previous interval
+  clearInterval(intervalId);
+  
+  // Set new interval to call the function every 1 second
+  intervalId = setInterval(getmessages, 1000);
+}
+
+startUpdatingMessages();
