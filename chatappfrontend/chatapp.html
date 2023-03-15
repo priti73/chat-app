@@ -16,6 +16,27 @@
         <button type="submit">Send</button>
       </form>
     </div>
+
+    <div id="create-group-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Create Group</h2>
+        <form id="create-group-form">
+          <label for="group-name">Group Name:</label>
+          <input type="text" id="group-name" name="group-name">
+          <label for="members">Invite Members:</label>
+          <input type="text" id="members" name="members">
+          <button type="submit">Create Group</button>
+        </form>
+      </div>
+    </div>
+    
+    <div id="groups-list">
+      <h2>My Groups</h2>
+      <ul id="groups">
+        <!-- Groups will be dynamically added here -->
+      </ul>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.4.1/axios.min.js">
     </script>
     <script src="chatapp.js"></script>

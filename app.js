@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 const sequelize=require('./util/database');
 const User=require('./models/signup');
 const Chat=require('./models/chat');
+const Group=require('./models/group');
+const user_group=require('./models/user_group');
 
 
 var cors =require('cors');
@@ -25,6 +27,8 @@ app.set('views', 'views');
 const usersrouteRoutes = require('./routes/signup');
 const loginRoutes = require('./routes/login');
 const chatRoutes = require('./routes/chat');
+const GroupRoutes = require('./routes/group');
+const GroupchatRoutes=require('./routes/groupchat');
 
 
 app.use(bodyParser.json({ extended: false }));
@@ -35,6 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(usersrouteRoutes);
 app.use(loginRoutes);
 app.use(chatRoutes);
+app.use(GroupRoutes);
+app.use(GroupchatRoutes);
 
 
 
@@ -44,11 +50,14 @@ console.log('url',req.url);
 })
 
 User.hasMany(Chat);
-Chat.hasMany(User);
+Chat.belongsTo(User);
+
+User.belongsToMany(Group, { through: 'user_group', foreignKey: 'signupId' });
+Group.belongsToMany(User, { through: 'user_group', foreignKey: 'groupId' });
 
 sequelize
-//.sync()
-.sync({force: true})
+.sync()
+//.sync({force: true})
 .then(result=>{
    app.listen(3000);
 })

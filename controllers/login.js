@@ -28,7 +28,6 @@ exports.login= async (req,res,next)=>{
               res.status(500).json({  message:"something went wrong"})
             }
             else if(result===true){
-            console.log(user[0].password);
             res.status(201).json({ success: true, message:"user logged successfully"
           ,token:generateToken(user[0].id,user[0].name)})
             }
