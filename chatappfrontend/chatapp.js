@@ -134,7 +134,7 @@ function startUpdatingMessages() {
   intervalId = setInterval(getmessages, 1000);
 }
 
-startUpdatingMessages();
+ //startUpdatingMessages();
 
 
 // Event listener for form submission
@@ -142,7 +142,7 @@ createGroupForm.addEventListener('submit', async(event) => {
   event.preventDefault();
   let grpinformation = {
     groupName: groupNameInput.value,
-    members: membersInput.value.split(',').map(email => email.trim())
+    members: membersInput.value.split(',').map(name => name.trim())
   };
   
   if (groupNameInput.value && membersInput.value) {
@@ -155,14 +155,24 @@ createGroupForm.addEventListener('submit', async(event) => {
         const parent=document.querySelector('#groups');
        
             let child=`<li onclick="insideGroup(${response.data.groupid}); getgroups()">${groupNameInput.value}</li>`
+    
             parent.innerHTML=parent.innerHTML+child
-        
+            
          
         // Close modal and clear form inputs
        // closeModal();
         groupNameInput.value = '';
         membersInput.value = '';
-      } else {
+      
+      }
+      else if(response.status==202){
+        groupNameInput.value = '';
+        membersInput.value = '';
+       alert('You are not admin of the group,you can not add the user to the group')
+      }
+       else {
+        groupNameInput.value = '';
+        membersInput.value = '';
         throw new Error(response.message);
       }
     } catch (error) {

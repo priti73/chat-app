@@ -9,7 +9,14 @@ exports.createGroup = async (req, res, next) => {
     const { groupName, members } = req.body;
     const userId = req.user.id;
      const grp=await Group.findAll({where:{name:groupName}});
-    if(grp.length>0){
+     
+     const grpuser=await UserGroup.findAll({where:{groupName:groupName, signupId:userId}});
+     console.log("admin",grpuser)
+     if(grp.length>0 && !grpuser[0].admin){
+      res.status(202).json({ success: false, message: ' You are not admin of the group,you can not add the user to the group' });
+     
+     }
+    else if(grp.length>0 && grpuser[0].admin){
      for (const member of members) {
           const user = await User.findOne({ where: { name: member } });
           if (user) {
@@ -22,7 +29,7 @@ exports.createGroup = async (req, res, next) => {
             await UserGroup.create(memberUser);
           }
         }
-            res.status(201).json({ success: true, groupid:grp[0].id, message: 'Added member in  Existing Group successfully' });
+            res.status(200).json({ success: true, groupid:grp[0].id, message: 'Added member in  Existing Group successfully' });
       } 
        
     else{
@@ -35,7 +42,8 @@ const groupUser = {
   signupId: userId,
   groupName: groupName,
   name: req.user.name,
-  groupId: group.id
+  groupId: group.id,
+  admin: true
 };
 await UserGroup.create(groupUser);
     

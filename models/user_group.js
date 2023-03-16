@@ -19,7 +19,8 @@ const UserGroup = sequelize.define('user_group', {
       model: 'user',
       key: 'id'
     }
-  }
+  },
+  admin:Sequelize.BOOLEAN
 });
 
 

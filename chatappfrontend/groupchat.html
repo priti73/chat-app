@@ -4,6 +4,8 @@
     <title>Chat Window</title>
   </head>
   <body>
+    <h2 id="group-name"></h2>
+
     <div id="chat-window">
       <div id="user-list">
         <!-- Display list of users here -->
@@ -17,6 +19,27 @@
       </form>
     </div>
 
+    <div id="remove-group-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <form id="remove-member-form">
+          <label for="members">Remove Members:</label>
+          <input type="text" id="members" name="members">
+          <button type="submit">Remove</button>
+          </form>
+      </div>
+    </div>
+
+    <div id="admin-group-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <form id="admin-member-form">
+          <label for="members">Make Members admin of the group:</label>
+          <input type="text" id="memberstomakeadmin" name="members">
+          <button type="submit">Admin</button>
+          </form>
+      </div>
+    </div>
    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.4.1/axios.min.js">
     </script>

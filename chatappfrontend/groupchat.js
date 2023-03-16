@@ -4,6 +4,14 @@ const chatMessageInput = document.getElementById('chat-message');
 const userList = document.getElementById('user-list');
 const chatMessages = document.getElementById('chat-messages');
 
+
+const removeMemberForm = document.querySelector('#remove-member-form');
+const membersInput = document.querySelector('#members');
+
+const makeMemberAdmin = document.querySelector('#admin-member-form');
+const makeMemberAdminInput = document.querySelector('#memberstomakeadmin');
+
+
 function parseJwt (token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -75,6 +83,10 @@ async function getusers(){
 const grpid=localStorage.getItem('groupId');
 const response = await axios.get(`http://localhost:3000/groupusers/getname?groupid=${grpid}`);
 const userlist=response.data.grpusers;
+const grpName=response.data.grpusers[0].groupName;
+const groupNameElement = document.getElementById('group-name');
+groupNameElement.textContent = grpName;
+userList.innerHTML='';
 userlist.forEach((user) => {
 const userElement = document.createElement('div');
 userElement.textContent = user.name+" joined";
@@ -115,5 +127,96 @@ clearInterval(intervalId);
 intervalId = setInterval(getmessages, 1000);
 }
 
-startUpdatingMessages();
+//startUpdatingMessages();
+
+removeMemberForm.addEventListener('submit', async(event) => {
+  event.preventDefault();
+  const grpid=localStorage.getItem('groupId');
+  let memberremoveinformation = {
+    grpId:grpid,
+    members: membersInput.value.split(',').map(name => name.trim())
+  };
+  
+  if (membersInput.value) {
+    try {
+       const token= localStorage.getItem('token');
+
+       const response = await axios.post("http://localhost:3000/group/removemember",memberremoveinformation ,{headers: {'Authentication' :token}});
+         console.log(response) ;
+      if (response.status==201) {
+        getusers();
+        membersInput.value = '';
+        alert(`${response.data.message}`)
+
+      }
+      else if(response.status==202){
+        membersInput.value = '';
+        alert(`${response.data.message}`) }
+
+      else if(response.status==200){
+        getusers();
+        membersInput.value = '';
+      alert(`${response.data.message}`)
+      
+      }
+       else {
+        membersInput.value = '';
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  } else {
+    alert('Please fill out all fields.');
+  }
+});
+
+
+
+makeMemberAdmin.addEventListener('submit', async(event) => {
+  event.preventDefault();
+  const grpid=localStorage.getItem('groupId');
+  let membermakeadmininformation = {
+    grpId:grpid,
+    members: makeMemberAdminInput.value.split(',').map(name => name.trim())
+  };
+  
+  if (makeMemberAdminInput.value) {
+    try {
+       const token= localStorage.getItem('token');
+
+       const response = await axios.post("http://localhost:3000/group/makememberadmin",membermakeadmininformation ,{headers: {'Authentication' :token}});
+         console.log(response) ;
+      if (response.status==201) {
+        getusers();
+        makeMemberAdminInput.value = '';
+        alert(`${response.data.message}`)
+
+      }
+      else if(response.status==202){
+        makeMemberAdminInput.value = '';
+        alert(`${response.data.message}`) }
+
+        else if(response.status==204){
+          makeMemberAdminInput.value = '';
+          alert(`${response.data.message}`) }
+           
+      else if(response.status==200){
+        getusers();
+        makeMemberAdminInput.value = '';
+      alert(`${response.data.message}`)
+      
+      }
+       else {
+        makeMemberAdminInput.value = '';
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  } else {
+    alert('Please fill out all fields.');
+  }
+});
+
 
